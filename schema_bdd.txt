@@ -1,0 +1,41 @@
+Project School_example {
+  database_type: 'MariaDB'
+}
+
+Table "class" {
+  "class_id" int [pk, not null, increment]
+  "grade" int [not null]
+  "name" varchar(255) [not null]
+}
+
+Table "student" {
+  "student_id" int [pk, not null, increment]
+  "last_name" varchar(255) [not null]
+  "first_name" varchar(255) [not null]
+  "birthdate" date [not null]
+}
+
+Table "class_student" {
+  "class_id" int [not null]
+  "student_id" int [not null]
+}
+
+Table "assignement" {
+  "title" varchar(255)
+  "student_id" int [not null]
+  "teacher_id" int [not null]
+  "grade" float [not null]
+  "coefficient" float [not null, default: 1]
+}
+
+Table "teacher" {
+  "teacher_id" int [pk, not null, increment]
+  "last_name" varchar(255) [not null]
+  "first_name" varchar(255) [not null]
+  "subject" varchar(255) [not null]
+}
+
+Ref: "class_student"."class_id" > "class"."class_id"
+Ref: "class_student"."student_id" > "student"."student_id"
+Ref: "assignement"."student_id" > "student"."student_id"
+Ref: "assignement"."teacher_id" > "teacher"."teacher_id"
